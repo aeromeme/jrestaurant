@@ -14,7 +14,8 @@ import com.jrestaurantddd.domain.valueobjects.CategoryId;
 public class Category {
     // Primary Key
     @Id
-    @Convert(converter = CategoryIdConverter.class)
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "Id", columnDefinition = "uniqueidentifier"))
     private CategoryId id;
 
     // Category name mapped to 'Name' column

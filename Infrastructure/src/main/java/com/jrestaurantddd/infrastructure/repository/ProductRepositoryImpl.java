@@ -6,11 +6,13 @@ import com.jrestaurantddd.domain.ports.IProductRepository;
 import com.jrestaurantddd.infrastructure.persistence.JpaProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 @Repository
+@Transactional
 public class ProductRepositoryImpl implements IProductRepository {
     private final JpaProductRepository jpaProductRepository;
 
@@ -30,8 +32,10 @@ public class ProductRepositoryImpl implements IProductRepository {
     }
 
     @Override
-    public List<Product> getAll() {
-        return Collections.unmodifiableList(jpaProductRepository.findAll());
+    public CompletableFuture<List<Product>> getAll() {
+        return CompletableFuture.supplyAsync(() ->
+            Collections.unmodifiableList(jpaProductRepository.findAll())
+        );
     }
 
     @Override
@@ -40,7 +44,9 @@ public class ProductRepositoryImpl implements IProductRepository {
     }
 
     @Override
-    public Product getById(ProductId id) {
-        return jpaProductRepository.findById(id).orElse(null);
+    public CompletableFuture<Product> getById(ProductId id) {
+        return CompletableFuture.supplyAsync(() ->
+            jpaProductRepository.findById(id).orElse(null)
+        );
     }
 }

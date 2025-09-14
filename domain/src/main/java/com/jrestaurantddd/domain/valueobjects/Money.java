@@ -1,8 +1,14 @@
 package com.jrestaurantddd.domain.valueobjects;
+import jakarta.persistence.Embeddable;
 
+@Embeddable
 public final class Money {
-    private final double amount;
-    private final String currency;
+    private double amount;
+    private String currency;
+
+    protected Money() {
+        // For JPA
+    }
 
     public Money(double amount, String currency) {
         if (currency == null || currency.isEmpty()) {

@@ -4,16 +4,17 @@ import com.jrestaurantddd.domain.valueobjects.CategoryId;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
+import java.util.UUID;
 
 @Converter(autoApply = true)
-public class CategoryIdConverter implements AttributeConverter<CategoryId, String> {
+public class CategoryIdConverter implements AttributeConverter<CategoryId, UUID> {
     @Override
-    public String convertToDatabaseColumn(CategoryId id) {
-        return id != null ? id.toString() : null;
+    public UUID convertToDatabaseColumn(CategoryId id) {
+        return id != null ? id.getValue() : null;
     }
 
     @Override
-    public CategoryId convertToEntityAttribute(String dbData) {
-        return dbData != null ? CategoryId.fromString(dbData) : null;
+    public CategoryId convertToEntityAttribute(UUID dbData) {
+        return dbData != null ? new CategoryId(dbData) : null;
     }
 }

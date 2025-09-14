@@ -1,8 +1,14 @@
 package com.jrestaurantddd.domain.valueobjects;
 import java.util.UUID;
+import jakarta.persistence.Embeddable;
 
+@Embeddable
 public final class CategoryId {
-    private final UUID value;
+    private UUID value;
+
+    protected CategoryId() {
+        // For JPA
+    }
 
     public CategoryId(UUID value) {
         if (value == null) {

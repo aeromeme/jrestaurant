@@ -9,7 +9,8 @@ import com.jrestaurantddd.domain.valueobjects.ProductId;
 @Table(name = "Products")
 public class Product {
 	@Id
-	@Convert(converter = ProductIdConverter.class)
+	@Embedded
+	@AttributeOverride(name = "value", column = @Column(name = "Id", columnDefinition = "uniqueidentifier"))
 	private ProductId id;
 
 	@Column(name = "Name", nullable = false)
@@ -29,7 +30,7 @@ public class Product {
 	private boolean isActive;
 
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "CategoryId", nullable = false)
+	@JoinColumn(name = "CategoryId", referencedColumnName = "Id", nullable = false)
 	private Category category;
 
 	public Product(String name, Money price, int stock, boolean isActive, Category category) {
@@ -48,6 +49,9 @@ public class Product {
 		this.stock = stock;
 		this.isActive = isActive;
 		this.category = category;
+	}
+	protected Product() {
+	    // For JPA
 	}
 	public Category getCategory() {
 		return category;

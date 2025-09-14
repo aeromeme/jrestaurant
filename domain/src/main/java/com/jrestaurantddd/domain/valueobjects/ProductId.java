@@ -1,11 +1,17 @@
 package com.jrestaurantddd.domain.valueobjects;
 import java.util.UUID;
+import jakarta.persistence.Embeddable;
 
+@Embeddable
 public final class ProductId {
     public static ProductId newId() {
         return new ProductId(UUID.randomUUID());
     }
-    private final UUID value;
+    private UUID value;
+
+    protected ProductId() {
+        // For JPA
+    }
 
     public ProductId(UUID value) {
         if (value == null) {

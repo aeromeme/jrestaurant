@@ -4,11 +4,12 @@ import com.jrestaurantddd.domain.entities.Product;
 import com.jrestaurantddd.domain.valueobjects.ProductId;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public interface IProductRepository {
     Product add(Product product);
     Product edit(Product product);
-    List<Product> getAll();
+    CompletableFuture<List<Product>> getAll();
     void delete(ProductId id);
-    Product getById(ProductId id);
+    CompletableFuture<Product> getById(ProductId id);
 }
