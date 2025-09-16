@@ -15,6 +15,7 @@ public class ProductMapper {
         dto.setStock(product.getStock());
         dto.setActive(product.isActive());
         dto.setCategoryId(product.getCategory().getId().getValue());
+        dto.setCategory(product.getCategory() != null ? CategoryMapper.toDto(product.getCategory()) : null);
         return dto;
     }
 
